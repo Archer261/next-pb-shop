@@ -1,6 +1,4 @@
-import { sanityFetch } from '@/sanity/lib/fetch'
 import { getProducts } from '@/sanity/lib/queries'
-import { SanityDocument } from '@sanity/client';
 import { client } from '@/sanity/lib/client'
 import ProductCard from '../components/ProductCard'
 

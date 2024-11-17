@@ -1,7 +1,4 @@
 import Link from "next/link";
-import { sanityFetch } from '@/sanity/lib/fetch'
-import { getProducts } from '@/sanity/lib/queries'
-import { SanityDocument } from '@sanity/client';
 import StripeCheckoutButton from "./components/StripeCheckoutButton";
 import Hero from "./components/Hero";
 
