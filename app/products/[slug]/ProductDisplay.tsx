@@ -25,9 +25,13 @@ type Product = {
     };
 };
 
+type ProductDisplayProps = {
+    product: Product;
+};
+
 const defaultProductImage = "/api/placeholder/600/600"; // Fallback image URL
 
-export default function ProductDisplay({ product }: { product: Product }) {
+export default function ProductDisplay({ product }: ProductDisplayProps) {
     const [selectedVariant, setSelectedVariant] = useState(product.variants?.[0] || '');
     const [quantity, setQuantity] = useState(1);
     const [addedToCart, setAddedToCart] = useState(false);

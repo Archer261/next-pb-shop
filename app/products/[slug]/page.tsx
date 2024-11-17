@@ -1,13 +1,21 @@
-
 // app/products/[slug]/page.tsx
 import { groq } from 'next-sanity';
 import { client } from '../../../sanity/lib/client';
 import ProductDisplay from './ProductDisplay';
 
+// Define all types at the top
+type ProductSlug = {
+  slug: {
+    current: string;
+  };
+};
+
 type Product = {
   _id: string;
   name: string;
-  slug: string;
+  slug: {
+    current: string;
+  };
   price: number;
   description: string;
   images: {
@@ -22,6 +30,13 @@ type Product = {
     dimensions?: string;
     weight?: string;
   };
+};
+
+type PageProps = {
+  params: {
+    slug: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
 async function getProduct(slug: string): Promise<Product> {
@@ -46,22 +61,21 @@ async function getProduct(slug: string): Promise<Product> {
   return await client.fetch(query, { slug });
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<Array<{ slug: string }>> {
   const query = groq`*[_type == "product"] {
     slug {
       current
     }
   }`;
 
-  const products = await client.fetch(query);
+  const products: ProductSlug[] = await client.fetch(query);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return products.map((product: any) => ({
+  return products.map((product) => ({
     slug: product.slug.current,
   }));
 }
 
-export default async function ProductPage({ params }: { params: { slug: string } }) {
+export default async function ProductPage({ params }: PageProps) {
   const product = await getProduct(params.slug);
 
   return <ProductDisplay product={product} />;
