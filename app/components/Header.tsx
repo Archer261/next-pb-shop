@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import ShoppingCart from './ShoppingCart';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,8 +34,8 @@ const Header = () => {
                         </Link>
                     </div>
 
-                    {/* Desktop Navigation - Now with ml-auto to push to right */}
-                    <div className="hidden md:flex md:space-x-8 ml-auto">
+                    {/* Desktop Navigation with Shopping Cart */}
+                    <div className="hidden md:flex md:items-center md:space-x-8 ml-auto">
                         {navigation.map((item) => (
                             <Link
                                 key={item.name}
@@ -47,10 +48,12 @@ const Header = () => {
                                 {item.name}
                             </Link>
                         ))}
+                        <ShoppingCart />
                     </div>
 
-                    {/* Mobile menu button - Now attached to the right */}
-                    <div className="flex md:hidden ml-auto">
+                    {/* Mobile menu button and cart */}
+                    <div className="flex items-center md:hidden ml-auto space-x-2">
+                        <ShoppingCart />
                         <button
                             type="button"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
